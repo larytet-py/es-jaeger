@@ -9,15 +9,16 @@ with open(filename, "r") as f:
 
 hits = {}
 for hit in data["hits"]["hits"]:
-    print(hit)
     hit_source = hit["_source"]
     trace_id = hit_source["traceID"]
-    hits[trace_id] = hits.get(trace_id, []).append(hit)
+    spans = hits.get(trace_id, [])
+    spans.append(hit)
+    hits[trace_id] = spans
 
-min = len(hits[trace_id])
-max = min
+min_trace = len(hits[trace_id])
+max_trace = min_trace
 for spans in hits:
-    max = max(max, len(spans))
-    min = min(min, len(spans))
+    max_trace = max(max_trace, len(spans))
+    min_trace = min(min_trace, len(spans))
 
-print(max, min)
+print(max_trace, min_trace)
