@@ -12,7 +12,7 @@ for hit in data["hits"]["hits"]:
     print(hit)
     hit_source = hit["_source"]
     trace_id = hit_source["traceID"]
-    hits[trace_id] = traces.get(hits, []).append(hit)
+    hits[trace_id] = hits.get(trace_id, []).append(hit)
 
 min = len(hits[trace_id])
 max = min
