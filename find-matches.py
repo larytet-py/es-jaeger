@@ -26,4 +26,4 @@ for trace_id in hits:
     min_trace = min(min_trace, len_spans)
     histogram[len_spans] = histogram.get(len_spans, 0) + 1
 
-print(histogram)
+print(sorted(histogram.items()))
