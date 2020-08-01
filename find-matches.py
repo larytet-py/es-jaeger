@@ -3,18 +3,26 @@ import sys
 import json
 import re
 
-filename = sys.argv[1]
-with open(filename, "r") as f:
-    data = json.load(f)
 
 hits = {}
-for hit in data["hits"]["hits"]:
-    hit_source = hit["_source"]
-    trace_id = hit_source["traceID"]
-    spans = hits.get(trace_id, [])
-    spans.append(hit)
-    hits[trace_id] = spans
-    #print(len(hits[trace_id]))
+processed_filenames = {}
+for filename in sys.argv[1:]:
+    if filename in processed_filenames:
+        print(f"I have seen {filename} already")
+        continue
+    with open(filename, "r") as f:
+        data = json.load(f)
+
+    for hit in data["hits"]["hits"]:
+        hit_source = hit["_source"]
+        trace_id = hit_source["traceID"]
+        spans = hits.get(trace_id, [])
+        spans.append(hit)
+        hits[trace_id] = spans
+        #print(len(hits[trace_id]))
+    processed_filenames[filename] = True
+
+print(f"Processed {len(processed_filenames)} files")
 
 #print(hits[trace_id])
 min_trace = len(hits[trace_id])
