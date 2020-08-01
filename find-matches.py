@@ -31,9 +31,11 @@ for trace_id in hits:
             if hit_tag["key"] == "http.path":
                 hit_tag_value = hit_tag["value"]
                 global_tx_id = re.match("/tm/v2/transaction/(.+)", hit_tag_value).group(1)
-        print(f"https://ghosts.awseu.apollo-prod.cyren.cloud/jaeger/trace/{trace_id}   {global_tx_id}")
+        print(f"{trace_id}   {global_tx_id}")
+
     max_trace = max(max_trace, len_spans)
     min_trace = min(min_trace, len_spans)
     histogram[len_spans] = histogram.get(len_spans, 0) + 1
 
 print(sorted(histogram.items()))
+
