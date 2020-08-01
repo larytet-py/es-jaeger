@@ -50,10 +50,17 @@ sorted_items = sorted(histogram.items())
 for i in sorted_items:
     print("({:>2},{:>3}) ".format(i[0], i[1]), end="")
 print()
+
 acc = 0
+subtotals = []
 for i in sorted_items:
     acc += i[1] 
+    subtotals.append(acc)
     print("{:>8} ".format(acc), end="")
+print()
+
+for subtotal in subtotals:
+    print("{:6.1f}% ".format(subtotal/acc*100), end="")
 print()
 
 
