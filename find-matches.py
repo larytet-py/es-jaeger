@@ -45,5 +45,15 @@ for trace_id in hits:
     min_trace = min(min_trace, len_spans)
     histogram[len_spans] = histogram.get(len_spans, 0) + 1
 
-print(sorted(histogram.items()))
+sorted_items = sorted(histogram.items())
+
+for i in sorted_items:
+    print("({:>2},{:>3}) ".format(i[0], i[1]), end="")
+print()
+acc = 0
+for i in sorted_items:
+    acc += i[1] 
+    print("{:>8} ".format(acc), end="")
+print()
+
 
